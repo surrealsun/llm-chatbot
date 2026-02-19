@@ -1,4 +1,5 @@
-# Campus Reality Simulator (Next.js + AI SDK)
+# Campus Reality Simulator (Next.js + AI SDK) 
+[Chat with me...!🤖](https://llm-chatbot-nu.vercel.app/)
 
 A chat application built with Next.js App Router and Vercel AI SDK, powered by Google Gemini (`gemini-2.5-flash`).
 

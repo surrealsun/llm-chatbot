@@ -1,13 +1,7 @@
 import { tool } from 'ai'
 import { z } from 'zod'
 
-const weatherCatalog: Record<string, { tempC: number; condition: string }> = {
-  london: { tempC: 12, condition: 'Cloudy' },
-  tokyo: { tempC: 22, condition: 'Sunny' },
-  'new york': { tempC: 18, condition: 'Partly cloudy' },
-  chennai: { tempC: 33, condition: 'Hot and humid' },
-  bangalore: { tempC: 26, condition: 'Pleasant' }
-}
+
 
 export const getWeather = tool({
   description: 'Get the current weather for a city.',
@@ -15,6 +9,13 @@ export const getWeather = tool({
     city: z.string().min(2).describe('City name, for example: Chennai')
   }),
   execute: async ({ city }) => {
+    const weatherCatalog: Record<string, { tempC: number; condition: string }> = {
+  london: { tempC: 12, condition: 'Cloudy' },
+  tokyo: { tempC: 22, condition: 'Sunny' },
+  'new york': { tempC: 18, condition: 'Partly cloudy' },
+  chennai: { tempC: 33, condition: 'Hot and humid' },
+  bangalore: { tempC: 26, condition: 'Pleasant' }
+}
     const key = city.trim().toLowerCase()
     const data = weatherCatalog[key] ?? { tempC: 30, condition: 'Data unavailable' }
 

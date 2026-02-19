@@ -1,5 +1,6 @@
-import { streamText, UIMessage, convertToModelMessages } from 'ai'
+import { streamText, stepCountIs, UIMessage, convertToModelMessages } from 'ai'
 import { google } from '@ai-sdk/google'
+import { tools } from './tools'
 
 type RuntimeContext = {
   appName: string
@@ -33,6 +34,7 @@ of their habits, choices, and strategies.
 - Highlight hidden risks and missed opportunities gently.
 - Compare better alternatives when helpful.
 - Use realistic campus and industry scenarios.
+- If the user asks about weather in any city, use the weather tool to fetch weather details before answering.
 - Encourage balanced, long-term thinking.
 - Provide practical and achievable improvement steps.
 - Avoid generic or overly negative advice.
@@ -111,7 +113,9 @@ export async function POST (req: Request) {
   const result = streamText({
     model: google('gemini-2.5-flash'),
     system: systemPrompt,
-    messages: await convertToModelMessages(messages)
+    messages: await convertToModelMessages(messages),
+    tools,
+    stopWhen: stepCountIs(5)
   })
 
   return result.toUIMessageStreamResponse()
